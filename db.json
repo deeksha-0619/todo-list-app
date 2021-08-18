@@ -17,12 +17,12 @@
     },
     {
       "title": "Writing",
-      "complete": false,
+      "complete": true,
       "id": 5
     },
     {
       "title": "Complete To Do List",
-      "complete": false,
+      "complete": true,
       "id": 6
     }
   ]
