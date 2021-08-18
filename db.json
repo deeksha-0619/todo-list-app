@@ -1,44 +1,29 @@
 {
   "todos": [
     {
-      "title": "Complete assignment by 11 am",
-      "complete": false,
-      "id": 8
+      "id": 1,
+      "title": "Read SitePoint article",
+      "complete": true
     },
     {
-      "complete": false,
-      "title": "deeksha rani",
-      "id": 11
+      "id": 2,
+      "title": "Clean inbox",
+      "complete": true
     },
     {
+      "title": "Reading",
       "complete": true,
-      "title": "test",
-      "id": 12
+      "id": 4
     },
     {
+      "title": "Writing",
       "complete": false,
-      "title": "test",
-      "id": 13
+      "id": 5
     },
     {
+      "title": "Complete To Do List",
       "complete": false,
-      "title": "dsdsd",
-      "id": 14
-    },
-    {
-      "complete": false,
-      "title": "Test",
-      "id": 15
-    },
-    {
-      "complete": false,
-      "title": "asas",
-      "id": 16
-    },
-    {
-      "title": "test",
-      "complete": false,
-      "id": 17
+      "id": 6
     }
   ]
 }

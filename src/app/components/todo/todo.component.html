@@ -2,15 +2,19 @@
 <p>Stay Focussed</p>
 <section class="inputarea">
     <div class="row">
+        <div class="todo-search-bar">
+            <input type="text" class="form-control capitalize" id="title" name="title" [(ngModel)]="searchedInput" placeholder="Search Todo here.." (keyup.escape)="clearSearchInput()" 
+            (keyup)="searchTodos()" maxlength="80">
+        </div>
         <div class="col-md-10">
             <input type="text" class="form-control capitalize" id="title" name="title" [(ngModel)]="newTodo.title" placeholder="Enter An Item Name" (keyup.escape)="clearInput()" maxlength="80" required autofocus>
-            <div class="invalid-feedback">
-                To Do Already exists 
+            <div class="todo-exist" *ngIf="isTodoExist">
+                To Do Already exists. 
             </div>
         </div>
         <div class="col-md-2">
             <label>&nbsp;</label>
-            <button class="btn btn-primary btn-md btn-block" (click)="addEditTodo()" (keyup.enter)="addEditTodo()" type="submit">
+            <button class="btn btn-primary btn-md btn-block mr-10" (click)="addEditTodo()" (keyup.enter)="addEditTodo()" type="submit">
                 {{ isEditMode == false ? "ADD" : "UPDATE" }}
             </button>
             <button *ngIf="isEditMode == true" class="btn btn-danger btn-md btn-block" (click)="clearInput()" type="button">
@@ -23,11 +27,12 @@
 <section class="listarea">
     <div class="row">
         <div class="col-md-12">
-            <div ng-cloak *ngIf="todos.length == 0" style="color:#721c24;">You have 0 ToDo's.</div>
+            <div ng-cloak *ngIf="!todos.length && !searchedInput" style="color:#721c24;">You have 0 ToDo's.</div>
+            <div ng-cloak *ngIf="!filteredTodos.length && searchedInput" style="color:#721c24;">No todo found.</div>
             <ul class="list-group list-group-flush" *ngIf="todos.length > 0">
-                <li class="list-group-item" *ngFor="let todo of todos; let i=index" [class.completed]="todo.complete">
+                <li class="list-group-item" *ngFor="let todo of searchedInput ? filteredTodos : todos; let i=index" [class.completed]="todo.complete">
                     <div class="pull-left">
-                        <label class="container capitalize" [ngClass]="{'todos-complete': todo.complete}">
+                        <label class="container capitalize">
                             <input type="checkbox" (change)="markAsCompleted(todo)" [checked]="todo.complete"
                                 [(ngModel)]="todo.complete">
                             <span class="checkmark"></span>

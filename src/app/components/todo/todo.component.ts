@@ -11,12 +11,19 @@ export class TodoComponent implements OnInit {
   todos: Todo[] = [];
   newTodo: Todo = new Todo();
   isEditMode = false;
-  
+  isTodoExist: boolean = false;
+  searchedInput: string = "";
+  filteredTodos: Todo[] = [];
+
   constructor(
     private todoDataService: TodoDataService
   ) { }
 
   ngOnInit(): void {
+    this.getAllTodos();
+  }
+
+  getAllTodos(): void {
     this.todoDataService.getAllTodos().subscribe((todos) => {
       this.todos = todos;
     });
@@ -40,13 +47,19 @@ export class TodoComponent implements OnInit {
     if(this.newTodo.title.trim() === "") {
       return;
     }
-    
     if (this.isEditMode) {
-     this.updateTodo()
+     this.updateTodo(this.newTodo)
     } else {
-      this.todoDataService.createTodo(this.newTodo).subscribe((newTodo) => {
-        this.todos = this.todos.concat(newTodo);
-      });
+      const index = this.todos.findIndex((el) => el.title.toLocaleLowerCase() === this.newTodo.title.toLocaleLowerCase());
+      if (index === -1) {
+        this.isTodoExist = false;
+        this.todoDataService.createTodo(this.newTodo).subscribe((newTodo) => {
+          this.todos = this.todos.concat(newTodo);
+        });
+      } else {
+        this.isTodoExist = true;
+        setTimeout(() => this.isTodoExist = false, 2000);
+      }
     }
     this.clearInput();
   }
@@ -56,14 +69,23 @@ export class TodoComponent implements OnInit {
     this.isEditMode = false;
   }
 
-  markAsCompleted(todo: Todo) {
-    todo.complete = true;
-    this.newTodo = todo;
-    this.updateTodo();
+  clearSearchInput() {
+    this.searchedInput = "";
+    this.getAllTodos();
   }
 
-  updateTodo() {
-    this.todoDataService.updateTodo(this.newTodo).subscribe((newTodo) => {
+  markAsCompleted(todo: Todo) {
+    this.updateTodo(todo);
+  }
+
+  searchTodos(): void {
+    if (this.searchedInput) {
+      this.filteredTodos = this.todos.filter((el) => el.title.toLocaleLowerCase().includes(this.searchedInput.toLocaleLowerCase().trim()));
+    }
+  }
+
+  updateTodo(todo: Todo) {
+    this.todoDataService.updateTodo(todo).subscribe((newTodo) => {
       const index = this.todos && this.todos.length ? this.todos.findIndex((el) => el.id === newTodo.id) : -1;
       if (index > -1) {
         this.todos[index] = newTodo

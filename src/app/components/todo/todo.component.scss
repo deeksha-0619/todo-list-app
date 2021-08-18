@@ -56,14 +56,28 @@
     padding-left: 35px;
     margin-bottom: 12px;
     cursor: pointer;
-    font-size: 22px;
+    font-size: 18px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
 
-
 .todos-complete {
     text-decoration: line-through;
+}
+.todo-exist {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: .875em;
+    color: #dc3545;
+}
+
+.todo-search-bar {
+    padding-bottom: 15px;
+    width: 83.5%;
+}
+
+.mr-10 {
+    margin-right: 10px;
 }
